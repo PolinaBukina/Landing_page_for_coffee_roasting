@@ -1,39 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# «Кварта» — лендинг обжарки кофе
 
-## Getting Started
+**Сайт:** (https://landing-page-for-coffee-roasting.vercel.app/)
+**Стек:** Next.js 16 (App Router), TypeScript, CSS Modules, Upstash Redis, Vercel.
 
-First, run the development server:
+## Что сделано
+- Лендинг: свежесть, ассортимент с ценами, подписка, доставка и самовывоз, о мастерской, контакты, форма заявки.
+- `POST /api/lead`: проверка белорусского номера, защита от повторной заявки, сохранение источника рекламы.
+- Кнопки «Заказать» и «Оформить подписку» прокручивают к форме и сами заполняют «что интересует» и комментарий.
+- Штамп «Ближайшая обжарка» автоматически показывает дату следующего четверга (по минскому времени).
+- Превью ссылки в мессенджерах (Open Graph), плавное появление блоков с учётом «уменьшить движение».
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Решения
+- **Хранилище — Upstash Redis.** На Vercel файлы и локальный SQLite не сохраняются между запросами. В Redis защита от дублей — одна атомарная команда `SET phone NX EX 600`: даже при двойном клике и одновременных запросах вторая заявка не создаётся. Повтор возвращает `duplicate: true`, и человек видит «заявка уже у нас», а не ошибку.
+- **Источник клиента.** При входе на сайт UTM-метки, `yclid`/`gclid`/`fbclid`, страница входа и referrer сохраняются в localStorage и уходят вместе с заявкой. Новый переход с рекламы перезаписывает старый.
+- **Ошибки.** Неверные поля подсвечиваются с подсказкой; при сбое сервера или сети показывается, что случилось и что делать, введённые данные не теряются.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Допущения
+- Принимаются мобильные номера (25, 29, 33, 44) и городские Минска (17) — доставка и самовывоз только по Минску.
+- Стоимость доставки для заказов до 50 BYN в задании не указана — на сайте вместо цены написано «уточнит менеджер».
+- Телефона мастерской нет в задании — в контактах адрес и часы работы.
+- Срок приёма заказов на ближайшую обжарку не указан — штамп показывает просто ближайший четверг.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Что делала я, а что ИИ
+Работала с Claude (чат, не Claude Code — поэтому лог в виде ссылки/скриншотов).
+- **Я:** выбрала стек и хранилище, настроила GitHub, Vercel и Upstash, нашла референс и задала направление дизайна (песочная палитра вместо шоколадной), сгенерировала фото (главное — Canva AI / Nano Banana 2, остальные — ChatGPT) и отбирала варианты, тестировала форму руками и на телефоне, вносила правки.
+- **ИИ:** писал большую часть кода по моим запросам, предлагал варианты дизайна, тексты и промпты для фото.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-1. Генерация изображений:
-Для главного изображения использовала canva.ai, nano banano 2, для остальных картинок ChatGPT 
+## Где ИИ ошибся и как это заметили
+- Написал `export const runtime = 'nodejs'` — в Next.js 16 с `cacheComponents` это запрещено. Заметила по ошибке сборки.
+- Использовал тип `FormEvent`, которого нет в новых типах React. Заметила по подсветке ошибок в редакторе.
+- Не учёл, что в проекте включён Tailwind: его обработчик в `next.config.ts` ломал CSS-модули, и у компонентов пропали стили. Заметила на сайте, причину нашли, собрав репозиторий заново.
+- В вёрстке штамп с датой наезжал на заголовок на телефоне, а подсказка под телефоном сдвигала кнопку «Отправить», и первый клик терялся. Поймали по скриншотам и автотесту.
