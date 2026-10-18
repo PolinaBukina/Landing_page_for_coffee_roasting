@@ -1,0 +1,102 @@
+.section {
+  background: var(--espresso);
+  color: var(--cream);
+}
+
+.grid {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+
+.eyebrow {
+  color: var(--sand-300);
+}
+
+.text h2 em {
+  color: var(--sand-300);
+}
+
+.lead {
+  margin-top: 22px;
+  max-width: 30em;
+  font-size: 1.1rem;
+  color: rgba(251, 246, 238, 0.78);
+}
+
+.media {
+  position: relative;
+  margin-top: 40px;
+  aspect-ratio: 16 / 10;
+  background: rgba(251, 246, 238, 0.08);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.card {
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--sand-50);
+  color: var(--ink);
+  border-radius: var(--radius);
+}
+
+.price {
+  font-family: var(--font-serif);
+  font-size: clamp(4.2rem, 10vw, 5.6rem);
+  line-height: 1;
+  color: var(--caramel);
+}
+
+.price span {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+.list {
+  list-style: none;
+  margin: 28px 0 32px;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.list li {
+  position: relative;
+  padding: 14px 0 14px 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  width: 12px;
+  height: 7px;
+  border-left: 2px solid var(--caramel);
+  border-bottom: 2px solid var(--caramel);
+  transform: translateY(-70%) rotate(-45deg);
+}
+
+.cta {
+  width: 100%;
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 7fr 5fr;
+    gap: 80px;
+  }
+}

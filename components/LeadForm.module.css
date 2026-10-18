@@ -1,0 +1,160 @@
+.form {
+  display: grid;
+  gap: 22px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field label,
+.choices legend {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+.optional {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  padding: 13px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid var(--sand-300);
+  border-radius: 0;
+  transition: border-color 0.2s;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 84px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(107, 86, 70, 0.55);
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--caramel);
+}
+
+.field input[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+.choices {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.choices legend {
+  margin-bottom: 12px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Радиокнопки в виде «таблеток» */
+.pill {
+  position: relative;
+  cursor: pointer;
+}
+
+.pill input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.pill span {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px solid var(--sand-300);
+  border-radius: 999px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.pill:hover span {
+  border-color: var(--caramel);
+}
+
+.pill input:checked + span {
+  background: var(--caramel);
+  border-color: var(--caramel);
+  color: var(--cream);
+}
+
+.pill input:focus-visible + span {
+  outline: 2px solid var(--caramel);
+  outline-offset: 3px;
+}
+
+.pill input[data-invalid='true'] + span {
+  border-color: var(--error);
+}
+
+.error {
+  display: block;
+  margin-top: 8px;
+  color: var(--error);
+  font-size: 0.88rem;
+}
+
+.alert {
+  padding: 14px 16px;
+  border-left: 3px solid var(--error);
+  background: #f7e3dc;
+  color: #6e2414;
+  font-size: 0.95rem;
+}
+
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.privacy {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.done {
+  padding: 8px 0;
+}
+
+.doneTitle {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  line-height: 1.1;
+  color: var(--caramel);
+  margin-bottom: 12px;
+}

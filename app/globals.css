@@ -1,26 +1,191 @@
-@import "tailwindcss";
+/* ─── «Кварта»: песок и карамель ─── */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --sand-50: #f6eee2;   /* основной фон */
+  --sand-100: #f0e4d2;
+  --sand-200: #e9d6ba;  /* чередующиеся блоки */
+  --sand-300: #dcc29e;
+  --caramel: #9c5a2e;   /* акцент: кнопки, цены, штампы */
+  --caramel-dark: #7e4520;
+  --espresso: #3a2a20;  /* тёмные блоки */
+  --ink: #2b2019;       /* текст */
+  --ink-soft: #6b5646;  /* второстепенный текст */
+  --line: rgba(43, 32, 25, 0.18);
+  --cream: #fbf6ee;     /* текст на тёмном */
+  --error: #a3341f;
+
+  --font-serif: var(--font-cormorant), 'Times New Roman', serif;
+  --font-sans: var(--font-onest), system-ui, sans-serif;
+
+  --container: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section: clamp(72px, 10vw, 128px);
+  --radius: 4px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--sand-50);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+}
+
+h2 em,
+h1 em {
+  font-style: italic;
+  color: var(--caramel);
+}
+
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 3px;
+}
+
+/* ─── общие кирпичики ─── */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: var(--section) 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 18px;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--ink-soft);
+  max-width: 34em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 28px;
+  border: 1px solid var(--caramel);
+  border-radius: 999px;
+  background: var(--caramel);
+  color: var(--cream);
+  font: 500 1rem/1 var(--font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn:hover {
+  background: var(--caramel-dark);
+  border-color: var(--caramel-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--caramel);
+}
+
+.btnGhost:hover {
+  background: var(--caramel);
+  color: var(--cream);
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--espresso);
+  color: var(--cream);
+  border-radius: var(--radius);
+}
+
+.skip:focus {
+  top: 12px;
+}
+
+/* Плавное появление блоков при прокрутке (см. components/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.isVisible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+

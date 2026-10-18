@@ -1,0 +1,53 @@
+.section {
+  background: var(--sand-200);
+}
+
+.grid {
+  display: grid;
+  gap: 48px;
+}
+
+.text h2 {
+  margin-bottom: 24px;
+}
+
+.contacts {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.contacts h3 {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 8px;
+}
+
+.contacts a {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--caramel);
+  text-underline-offset: 4px;
+}
+
+.formCard {
+  padding: clamp(24px, 4vw, 44px);
+  background: var(--sand-50);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px -32px rgba(58, 42, 32, 0.35);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 5fr 6fr;
+    gap: 80px;
+    align-items: start;
+  }
+}
